@@ -1,0 +1,10 @@
+{
+  "database": {
+    "host": "127.0.0.1",
+    "username": "root",
+    "password": "password",
+    "port": 3306,
+    "name": "project1",
+    "alter": "true"
+  }
+}
