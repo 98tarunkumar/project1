@@ -1,56 +1,56 @@
 const { Sequelize } = require('sequelize');
-const company = require('./company');
+const expense_category = require('./expense_category');
 
 module.exports = (sequelize, DataTypes) => {
-  const User = sequelize.define(
-    'User',
+  const Expenses = sequelize.define(
+    'Expenses',
     {
       id: {
         type: DataTypes.INTEGER.UNSIGNED,
         autoIncrement: true,
         primaryKey: true
       },
-      name: {
+      title: {
         type: DataTypes.STRING,
         allowNull: false
       },
-      email: {
+      description: {
         type: DataTypes.STRING,
         allowNull: false
       },
-      password: {
-        type: DataTypes.STRING,
+      amount: {
+        type: DataTypes.DOUBLE,
         allowNull: false
       },
-      password_expires_at: {
-        type: DataTypes.DATE,
-        allowNull: false
-      },
-      company_id_fk: {
+      expense_category_id_fk: {
         type: DataTypes.INTEGER.UNSIGNED,
         allowNull: false
       },
-      role: {
-        type: DataTypes.ENUM('admin', 'user'),
+      user_id_fk: {
+        type: DataTypes.INTEGER.UNSIGNED,
         allowNull: false
       }
     },
     {
-      tableName: 'users',
+      tableName: 'expenses',
       timestamps: true
     }
   );
 
-  User.associate = (models) => {
-    User.belongsTo(models.Company, {
-      foreignKey: 'company_id_fk',
+  Expenses.associate = (models) => {
+    Expenses.belongsTo(models.Expense_Category, {
+      foreignKey: 'expense_category_id_fk',
       targetKey: 'id'
     });
-    User.hasMany(models.Expenses, {
+    Expenses.belongsTo(models.User, {
       foreignKey: 'user_id_fk',
+      targetKey: 'id'
+    });
+    Expenses.hasMany(models.File, {
+      foreignKey: 'expenses_id_fk',
       sourceKey: 'id'
     });
   };
 
-  return User;
+  return Expenses;
 };

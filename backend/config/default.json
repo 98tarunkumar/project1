@@ -5,6 +5,6 @@
     "password": "password",
     "port": 3306,
     "name": "project1",
-    "alter": "true"
+    "alter": false
   }
 }
